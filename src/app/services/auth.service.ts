@@ -22,4 +22,11 @@ export class AuthService {
       password,
     });
   }
+
+  isAvailable(email: string | null) {
+    return this.http.post<{ isAvailable: boolean }>(
+      `${this.apiUrl}/auth/is-available`,
+      { email }
+    );
+  }
 }
