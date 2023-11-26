@@ -36,4 +36,15 @@ export class AuthService {
       { email }
     );
   }
+
+  recovery(email: string) {
+    return this.http.post(`${this.apiUrl}/auth/recovery`, { email });
+  }
+
+  changePassword(token: string, password: string) {
+    return this.http.post(`${this.apiUrl}/auth/change-password`, {
+      token,
+      password,
+    });
+  }
 }
