@@ -8,14 +8,14 @@ export class TokenService {
   constructor() {}
 
   saveToken(token: string): void {
-    setCookie('token-trello', token, { expires: 1, path: '/' });
+    setCookie('token-cook', token, { expires: 1, path: '/' });
   }
 
   getToken(): string {
-    return getCookie('token-trello') || '';
+    return getCookie('token-cook') || '';
   }
 
   removeToken(): void {
-    removeCookie('token-trello');
+    removeCookie('token-cook');
   }
 }

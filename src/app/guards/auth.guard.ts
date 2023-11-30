@@ -22,7 +22,7 @@ import { TokenService } from '@services/token.service';
 import { inject } from '@angular/core';
 
 export const authGuard: CanActivateFn = () => {
-  const token: string | unknown = inject(TokenService).getToken();
+  const token: string | null = inject(TokenService).getToken() || null;
   if (!token) {
     inject(Router).navigate(['/login']);
     return false;
