@@ -6,13 +6,20 @@ import { switchMap, tap } from 'rxjs/operators';
 import { TokenService } from './token.service';
 import { IResLogin } from '@models/auth.model';
 import { IUser } from '@models/user.model';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   apiUrl = environment.api_url;
+  user$ = new BehaviorSubject<IUser | null>(null);
 
   constructor(public http: HttpClient, private tokenService: TokenService) {}
+
+  getDataUser() {
+    //? This method needs to be called to detect changes, it isn't in real time
+    return this.user$.getValue();
+  }
 
   login(email: string, password: string) {
     return this.http
@@ -66,6 +73,10 @@ export class AuthService {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
+    }).pipe(
+      tap((user) => {
+        this.user$.next(user);
+      })
+    )
   }
 }
