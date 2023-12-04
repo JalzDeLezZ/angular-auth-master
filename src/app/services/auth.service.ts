@@ -7,6 +7,8 @@ import { TokenService } from './token.service';
 import { IResLogin } from '@models/auth.model';
 import { IUser } from '@models/user.model';
 import { BehaviorSubject } from 'rxjs';
+import { checkToken } from '@interceptors/token.interceptor';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -68,15 +70,18 @@ export class AuthService {
   }
 
   getProfile() {
-    const token = this.tokenService.getToken();
-    return this.http.get<IUser>(`${this.apiUrl}/auth/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).pipe(
-      tap((user) => {
-        this.user$.next(user);
+    //  const token = this.tokenService.getToken();
+    return this.http
+      .get<IUser>(`${this.apiUrl}/auth/profile`, {
+        context: checkToken(),
+        // headers: {
+        // Authorization: `Bearer ${token}`,
+        // },
       })
-    )
+      .pipe(
+        tap((user) => {
+          this.user$.next(user);
+        })
+      );
   }
 }
