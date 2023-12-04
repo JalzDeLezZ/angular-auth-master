@@ -24,7 +24,7 @@ import { inject } from '@angular/core';
 export const authGuard: CanActivateFn = () => {
   const tokenService = inject(TokenService);
 
-  const isValidToken = tokenService.isValidToken();
+  const isValidToken = tokenService.isValidRefreshToken();
   console.log("🚀 ~ isValidToken:", isValidToken)
 
   if (!isValidToken) {

@@ -32,4 +32,33 @@ export class TokenService {
     }
     return false;
   }
+
+  /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
+
+
+  saveRefeshToken(token: string): void {
+    setCookie('refresh-token-cook', token, { expires: 1, path: '/' });
+  }
+
+  getRefeshToken(): string {
+    return getCookie('refresh-token-cook') || '';
+  }
+
+  removeRefeshToken(): void {
+    removeCookie('refresh-token-cook');
+  }
+
+  isValidRefreshToken(): boolean {
+    const token = this.getRefeshToken();
+    if (!token) return false;
+    const decodeToken = jwtDecode<JwtPayload>(token);
+    if (decodeToken && decodeToken?.exp) {
+      const tokenDate = new Date(0);
+      tokenDate.setUTCSeconds(decodeToken.exp);
+      const today = new Date();
+      return tokenDate.getTime() > today.getTime();
+    }
+    return false;
+  }
+
 }
