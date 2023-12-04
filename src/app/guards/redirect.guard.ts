@@ -52,9 +52,10 @@ export const authGuardFnExample: CanActivateFn = () => {
   const tokenService = inject(TokenService);
   const routerService = inject(Router);
 
-  const token = tokenService.getToken();
-  if (!token) {
-    return routerService.createUrlTree(['/login']);
+  const isValidToken = tokenService.isValidToken();
+
+  if (isValidToken) {
+    routerService.createUrlTree(['/app']);
   }
   return true;
 };

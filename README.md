@@ -27,6 +27,7 @@ $ angular cdk: https://material.angular.io/cdk/categories -- overlay, accordion,
 # implement
 $ npm i -D @tailwindcss/forms
 $ npm i typescript-cookie // https://www.npmjs.com/package/typescript-cookie
+$ npm i jwt-decode // https://www.npmjs.com/package/jwt-decode
 
 # generate
 $ ng g c pages/login --style=none --skip-tests
