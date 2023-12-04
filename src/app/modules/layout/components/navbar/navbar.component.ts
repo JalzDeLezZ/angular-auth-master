@@ -39,4 +39,14 @@ export class NavbarComponent {
   isValidToken() {
     console.log(this.tokenService.isValidToken());
   }
+
+  refreshToken() {
+    const refreshToken = this.tokenService.getRefeshToken();
+    const isValidRefreshToken = this.tokenService.isValidRefreshToken();
+    if (refreshToken && isValidRefreshToken) {
+      this.authService.refreshToken(refreshToken).subscribe((res) => {
+        console.log(res);
+      });
+    }
+  }
 }

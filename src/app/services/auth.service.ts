@@ -34,6 +34,19 @@ export class AuthService {
       );
   }
 
+  refreshToken(refreshToken: string) {
+    return this.http
+      .post<IResLogin>(`${this.apiUrl}/auth/refresh-token`, {
+        refreshToken,
+      })
+      .pipe(
+        tap((res) => {
+          this.tokenService.saveToken(res.access_token);
+          this.tokenService.saveRefeshToken(res.refresh_token);
+        })
+      );
+  }
+
   register(name: string, email: string, password: string) {
     return this.http.post(`${this.apiUrl}/auth/register`, {
       name,
